@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "shopping"
+version = "0.1.0"
+description = "Shopping project converted to a Python package"
+readme = "README.md"
+authors = [{name = "dagdelensahin"}]
+requires-python = ">=3.8"
+dependencies = ["click>=8.0", "flask>=2.0", "flask-cors>=3.0"]
+license = {text = "MIT"}
+
+[project.scripts]
+shopping = "shopping.cli:main"
+shopping-api = "shopping.api:main"

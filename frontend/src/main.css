@@ -1,0 +1,8 @@
+:root{
+  --bg:#f8fafc;
+  --fg:#0f172a;
+}
+body{font-family:system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg);margin:0}
+.app{max-width:720px;margin:3rem auto;padding:1rem}
+header h1{margin:0 0 1rem 0}
+button{padding:0.5rem 1rem;border-radius:6px;border:1px solid #ccc;background:white;cursor:pointer}

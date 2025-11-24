@@ -1,5 +1,24 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+.venv/
+venv/
+
+# Pytest
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+
+# Node / frontend
+node_modules/
+frontend/dist/
+# Byte-compiled / optimized / DLL files
+__pycache__/
 *.py[codz]
 *$py.class
 
