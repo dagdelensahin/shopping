@@ -1,0 +1,17 @@
+.venv
+venv
+env
+.env
+__pycache__
+*.pyc
+*.pyo
+*.egg-info
+dist
+build
+.git
+.gitignore
+.pytest_cache
+.DS_Store
+node_modules
+.env.local
+*.log

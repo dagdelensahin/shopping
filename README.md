@@ -70,3 +70,75 @@ python -m shopping.api
 ```
 
 The Flask dev server listens on port `5000` by default. The frontend example fetches `http://localhost:5000/api/hello`.
+
+## Docker Setup
+
+Run the entire full-stack (React Frontend + Flask Backend + MySQL) using Docker Compose:
+
+### Prerequisites
+- Docker and Docker Compose installed
+
+### Quick Start
+
+```powershell
+# Build and run all services (MySQL, Flask API, React UI)
+docker-compose up --build
+```
+
+All services will start automatically:
+- **Frontend** (React UI): `http://localhost:5173`
+- **Backend API**: `http://localhost:5000`
+- **MySQL Database**: `localhost:3306`
+
+### Services
+
+- **MySQL Database** — Runs on `localhost:3306`
+  - Root user: `root`
+  - Root password: `shopping_root_password`
+  - Database: `shopping`
+
+- **Flask Backend** — Runs on `http://localhost:5000`
+  - Auto-creates database and tables on startup
+  - API endpoints: `/api/hello`, `/api/items`
+
+- **React Frontend** — Runs on `http://localhost:5173`
+  - Built with Vite
+  - Connects to backend API automatically
+
+### Useful Commands
+
+```powershell
+# View logs from all services
+docker-compose logs -f
+
+# View logs from specific service
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f mysql
+
+# Stop all services
+docker-compose down
+
+# Remove all data (including database)
+docker-compose down -v
+
+# Rebuild images (if you made code changes)
+docker-compose build --no-cache
+
+# Rebuild specific service
+docker-compose build --no-cache frontend
+docker-compose build --no-cache backend
+```
+
+### Accessing the Application
+
+- **Web UI**: Open browser to `http://localhost:5173`
+- **Backend API**: `http://localhost:5000/api/hello`
+- **MySQL**: `mysql -h 127.0.0.1 -u root -pshopping_root_password`
+
+### Environment Variables
+
+Edit `docker-compose.yml` to customize:
+- `MYSQL_ROOT_PASSWORD` — MySQL root password
+- `DB_HOST` — Database host (default: `mysql`)
+- `VITE_API_URL` — Frontend API endpoint (default: `http://backend:5000`)

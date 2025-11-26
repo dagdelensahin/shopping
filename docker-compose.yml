@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: shopping_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: shopping_root_password
+      MYSQL_DATABASE: shopping
+      MYSQL_USER: shopping_user
+      MYSQL_PASSWORD: shopping_password
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    networks:
+      - shopping_network
+
+  backend:
+    build: .
+    container_name: shopping_backend
+    environment:
+      FLASK_ENV: development
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: shopping_root_password
+    ports:
+      - "5000:5000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    networks:
+      - shopping_network
+    command: python -m backend.api
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: shopping_frontend
+    environment:
+      VITE_API_URL: http://backend:5000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    networks:
+      - shopping_network
+    command: npm run dev -- --host 0.0.0.0
+
+volumes:
+  mysql_data:
+
+networks:
+  shopping_network:
+    driver: bridge
