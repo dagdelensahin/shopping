@@ -47,8 +47,18 @@ def create_app():
     
     # Database configuration from environment or defaults
     config = get_db_config()
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/shopping"
+    # Build URI without unsupported parameters
+    db_uri = f"mysql+pymysql://{config['user']}:{config['password']}@{config['host']}:{config['port']}/shopping?charset=utf8mb4"
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        'connect_args': {
+            'charset': 'utf8mb4',
+        },
+        'pool_size': 10,
+        'pool_recycle': 3600,
+        'pool_pre_ping': True,
+    }
     
     # Initialize database
     db.init_app(app)
