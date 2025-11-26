@@ -2,9 +2,13 @@
 import os
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import pymysql
+try:
+    import pymysql
+except ImportError:
+    pymysql = None
 from .core import greet
 from .models import db, User, Item, Order, OrderItem, Category
+from .routes import items_bp
 
 
 def get_db_config():
@@ -68,21 +72,14 @@ def create_app():
     with app.app_context():
         db.create_all()
 
+    # Register blueprints
+    app.register_blueprint(items_bp)
+
     @app.get("/api/hello")
     def hello():
         """Return a greeting message. Query param: `name`"""
         name = request.args.get("name", "World")
         return jsonify({"message": greet(name)})
-
-    @app.get("/api/items")
-    def items():
-        """Return a small list of sample items."""
-        sample = [
-            {"id": 1, "name": "Apple", "price": 0.5},
-            {"id": 2, "name": "Milk", "price": 1.2},
-        ]
-        return jsonify(sample)
-
     return app
 
 
