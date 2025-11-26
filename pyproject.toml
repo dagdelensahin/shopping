@@ -12,6 +12,10 @@ requires-python = ">=3.8"
 dependencies = ["click>=8.0", "flask>=2.0", "flask-cors>=3.0"]
 license = {text = "MIT"}
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["backend*"]
+
 [project.scripts]
-shopping = "shopping.cli:main"
-shopping-api = "shopping.api:main"
+shopping = "backend.cli:main"
+shopping-api = "backend.api:main"
