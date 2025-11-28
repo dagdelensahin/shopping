@@ -15,6 +15,7 @@ class Item(db.Model):
     category = db.Column(db.String(50))
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=True)
     
     # Relationships
     order_items = db.relationship('OrderItem', back_populates='item', cascade='all, delete-orphan')

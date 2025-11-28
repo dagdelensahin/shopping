@@ -8,7 +8,7 @@ except ImportError:
     pymysql = None
 from .core import greet
 from .models import db, User, Item, Order, OrderItem, Category
-from .routes import items_bp
+from .routes import items_bp, categories_bp
 
 
 def get_db_config():
@@ -74,6 +74,7 @@ def create_app():
 
     # Register blueprints
     app.register_blueprint(items_bp)
+    app.register_blueprint(categories_bp)
 
     @app.get("/api/hello")
     def hello():
