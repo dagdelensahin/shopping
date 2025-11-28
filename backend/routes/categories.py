@@ -106,3 +106,23 @@ def update_category(category_id):
     except Exception as e:
         db.session.rollback()
         return jsonify({"message": "Error updating category", "error": str(e)}), 500
+    
+
+@categories_bp.route('/<int:category_id>/items', methods=['GET'])
+def get_items_by_category(category_id):
+    """Get all items in a specific category."""
+    try:
+        category = Category.query.get(category_id)
+        if not category:
+            return jsonify({"message": "Category not found"}), 404
+        
+        items = category.items  # Assuming a relationship is defined in Category model
+        return jsonify([{
+            "id": item.id,
+            "name": item.name,
+            "description": item.description,
+            "price": item.price,
+            "quantity_in_stock": item.quantity_in_stock
+        } for item in items]), 200
+    except Exception as e:
+        return jsonify({"message": "Error fetching items", "error": str(e)}), 500   

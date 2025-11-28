@@ -11,6 +11,7 @@ class Category(db.Model):
     name = db.Column(db.String(50), unique=True, nullable=False, index=True)
     description = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    items = db.relationship('Item', backref='category_rel', lazy=True)
     
     def __repr__(self):
         return f'<Category {self.name}>'
