@@ -45,6 +45,7 @@ def create_database_if_not_exists():
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)
     
     # Create database if it doesn't exist
     create_database_if_not_exists()
