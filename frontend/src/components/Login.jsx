@@ -39,10 +39,10 @@ function Login() {
                 // Redirect or update UI accordingly
                 navigate("/dashboard", { replace: true });
             } else {
-                setError(data.message || "Login failed");
-                throw new Error(data.message || "Login failed");
+                 alert(data.error || "Login failed");
             }
         } catch (err) {
+            alert(err.message || "An error occurred. Please try again.");
             setError("An error occurred. Please try again.");
         } finally {
             setLoading(false);

@@ -8,8 +8,8 @@ except ImportError:
     pymysql = None
 from .core import greet
 from .models import db, User, Item, Order, OrderItem, Category
-from .routes import items_bp, categories_bp
-
+from .routes import items_bp, categories_bp, login_bp
+from backend.services import AuthService
 
 def get_db_config():
     """Get database configuration from environment variables or defaults."""
@@ -45,7 +45,14 @@ def create_database_if_not_exists():
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(
+    app,
+    resources={r"/api/*": {"origins": "http://localhost:5173"}},
+    allow_headers=["Content-Type", "Authorization"],
+    methods=["GET", "POST", "OPTIONS"]
+    )
+
+    app.register_blueprint(login_bp)
     
     # Create database if it doesn't exist
     create_database_if_not_exists()

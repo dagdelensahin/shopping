@@ -1,11 +1,18 @@
 import React from 'react'
+import { NAV_ITEMS } from '../NavConfig';
+import { NavLink } from 'react-router-dom';
 
 function Dashboard() {
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <p>Welcome to the dashboard!</p>
-        </div>
+        <nav> 
+            <ul> 
+                 {NAV_ITEMS.map(({ label, path }) => (
+                    <li key={path}>
+                        <NavLink to={path}>{label}</NavLink>
+                    </li>
+                ))}
+            </ul>
+        </nav>
     );
 }
 
