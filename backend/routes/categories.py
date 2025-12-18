@@ -24,16 +24,17 @@ def get_categories():
 def add_category():
     """Add a new category to the database."""
     data = request.json
-    
+    print(data)
+
     if not data:
         return jsonify({"message": "No data provided"}), 400
-    if not data.get("name"):
+    if not data['category']['name']:
         return jsonify({"message": "Missing required field: name"}), 400
     
     try:
         category = Category(
-            name=data["name"],
-            description=data.get("description", "")
+            name=data['category']['name'],
+            description=data['category']['description'] if 'category' in data and 'description' in data['category'] else ""
         )
         db.session.add(category)
         db.session.commit()

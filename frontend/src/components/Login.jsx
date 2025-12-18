@@ -35,7 +35,6 @@ function Login() {
 
             if (response.ok) {
                 console.log("Login successful:", data);
-                alert("Login successful!");
                 // Redirect or update UI accordingly
                 navigate("/dashboard", { replace: true });
             } else {
